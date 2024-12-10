@@ -7,7 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		AAA33C5D2D077D4E006297B0 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAA33C5B2D077D4E006297B0 /* ContentView.swift */; };
+		AA750B382D08BE8E00FBF48D /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA750B372D08BE8E00FBF48D /* Constants.swift */; };
+		AAA33C5D2D077D4E006297B0 /* MainPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAA33C5B2D077D4E006297B0 /* MainPageView.swift */; };
 		AAA33C5E2D077D4E006297B0 /* HarryPotterQuizApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAA33C5C2D077D4E006297B0 /* HarryPotterQuizApp.swift */; };
 		AAA33C602D077D4E006297B0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AAA33C5A2D077D4E006297B0 /* Assets.xcassets */; };
 		AAA33C692D077D76006297B0 /* negative-beeps.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = AAA33C662D077D76006297B0 /* negative-beeps.mp3 */; };
@@ -22,9 +23,10 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		AA750B372D08BE8E00FBF48D /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		AAA2C16B2D077A1E00764166 /* HarryPotterQuiz.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HarryPotterQuiz.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AAA33C5A2D077D4E006297B0 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		AAA33C5B2D077D4E006297B0 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		AAA33C5B2D077D4E006297B0 /* MainPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainPageView.swift; sourceTree = "<group>"; };
 		AAA33C5C2D077D4E006297B0 /* HarryPotterQuizApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HarryPotterQuizApp.swift; sourceTree = "<group>"; };
 		AAA33C612D077D76006297B0 /* deep-in-the-dell.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "deep-in-the-dell.mp3"; sourceTree = "<group>"; };
 		AAA33C622D077D76006297B0 /* hiding-place-in-the-forest.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "hiding-place-in-the-forest.mp3"; sourceTree = "<group>"; };
@@ -76,8 +78,9 @@
 			isa = PBXGroup;
 			children = (
 				AAA33C792D077DFD006297B0 /* Support */,
-				AAA33C5B2D077D4E006297B0 /* ContentView.swift */,
+				AAA33C5B2D077D4E006297B0 /* MainPageView.swift */,
 				AAA33C742D077DBC006297B0 /* Preview Content */,
+				AA750B372D08BE8E00FBF48D /* Constants.swift */,
 			);
 			path = HarryPotterQuiz;
 			sourceTree = "<group>";
@@ -192,8 +195,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AAA33C5D2D077D4E006297B0 /* ContentView.swift in Sources */,
+				AAA33C5D2D077D4E006297B0 /* MainPageView.swift in Sources */,
 				AAA33C5E2D077D4E006297B0 /* HarryPotterQuizApp.swift in Sources */,
+				AA750B382D08BE8E00FBF48D /* Constants.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

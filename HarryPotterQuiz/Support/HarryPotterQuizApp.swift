@@ -11,7 +11,7 @@ import SwiftUI
 struct HarryPotterQuizApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            MainPageView()
         }
     }
 }

@@ -8,24 +8,17 @@
 import SwiftUI
 import AVKit
 
+// MARK: - MainPageView
 struct MainPageView: View {
-    @State private var audioPlayer: AVAudioPlayer!
+    @State private var audioPlayer: AVAudioPlayer?
     @State private var moveBackgroundImage = false
     @State private var animateViewsIn = false
     
     var body: some View {
         GeometryReader { geo in
             ZStack {
-                Image(.hogwarts)
-                    .resizable()
-                    .frame(width: geo.size.width * 3, height: geo.size.height)
-                    .padding(.top, 3)
-                    .offset(x: moveBackgroundImage ? geo.size.width/1.1 : -geo.size.width/1.1)
-                    .onAppear {
-                        withAnimation(.linear(duration: 60).repeatForever()) {
-                            moveBackgroundImage.toggle()
-                        }
-                    }
+                AnimatedBackgroundView(moveBackgroundImage: $moveBackgroundImage, geo: geo)
+                
                 VStack {
                     HeaderView(animateViewsIn: $animateViewsIn)
                     Spacer()
@@ -42,22 +35,49 @@ struct MainPageView: View {
         .ignoresSafeArea()
         .onAppear {
             animateViewsIn = true
-            playAudio()
+            //            playAudio()
         }
     }
     
     private func playAudio() {
-        let sound = Bundle.main.path(forResource: "magic-in-the-air", ofType: "mp3")
+        guard let soundPath = Bundle.main.path(forResource: "magic-in-the-air", ofType: "mp3") else {
+            print("Audio file not found.")
+            return
+        }
         
-        audioPlayer = try! AVAudioPlayer(contentsOf: URL(filePath: sound!))
-        audioPlayer.numberOfLoops = -1
-        //        audioPlayer.play()
+        do {
+            audioPlayer = try AVAudioPlayer(contentsOf: URL(filePath: soundPath))
+            audioPlayer?.numberOfLoops = -1
+            audioPlayer?.play()
+        } catch {
+            print("Audio playback failed: \(error.localizedDescription)")
+        }
     }
-    
 }
 
+// MARK: - AnimatedBackgroundView
+struct AnimatedBackgroundView: View {
+    @Binding var moveBackgroundImage: Bool
+    var geo: GeometryProxy
+    
+    var body: some View {
+        Image(.hogwarts)
+            .resizable()
+            .frame(width: geo.size.width * 3, height: geo.size.height)
+            .padding(.top, 3)
+            .offset(x: moveBackgroundImage ? geo.size.width / 1.1 : -geo.size.width / 1.1)
+            .onAppear {
+                withAnimation(.linear(duration: Constants.backgroundAnimationDuration).repeatForever()) {
+                    moveBackgroundImage.toggle()
+                }
+            }
+    }
+}
+
+// MARK: - HeaderView
 struct HeaderView: View {
     @Binding var animateViewsIn: Bool
+    
     var body: some View {
         VStack {
             if animateViewsIn {
@@ -77,10 +97,11 @@ struct HeaderView: View {
                 .transition(.move(edge: .top))
             }
         }
-        .animation(.easeOut(duration: 0.7).delay(2), value: animateViewsIn)
+        .animation(.easeOut(duration: Constants.animationDuration).delay(Constants.delayForHeader), value: animateViewsIn)
     }
 }
 
+// MARK: - ScoresView
 struct ScoresView: View {
     @Binding var animateViewsIn: Bool
     
@@ -90,10 +111,9 @@ struct ScoresView: View {
                 VStack {
                     Text("Recent Scores")
                         .font(.title2)
-                    Text("33")
-                    Text("22")
-                    Text("12")
-                    
+                    ForEach([33, 22, 12], id: \.self) { score in
+                        Text("\(score)")
+                    }
                 }
                 .font(.title3)
                 .padding(.horizontal)
@@ -103,10 +123,11 @@ struct ScoresView: View {
                 .transition(.opacity)
             }
         }
-        .animation(.linear(duration: 1).delay(3.8), value: animateViewsIn)
+        .animation(.linear(duration: 1).delay(Constants.delayForScores), value: animateViewsIn)
     }
 }
 
+// MARK: - FooterButtonsView
 struct FooterButtonsView: View {
     @State private var scalePlayButton = false
     @Binding var animateViewsIn: Bool
@@ -116,71 +137,60 @@ struct FooterButtonsView: View {
     var body: some View {
         HStack {
             Spacer()
-            VStack {
-                if animateViewsIn {
-                    
-                    Button {
-                        // Show Instructions
-                    } label: {
-                        Image(systemName: "info.circle.fill")
-                            .font(.largeTitle)
-                            .foregroundStyle(.white)
-                            .shadow(radius: 5)
-                    }
-                    .transition(.offset(x: -viewWidth / 4))
-                }
-            }
-            .animation(.easeOut(duration: 0.7).delay(2.7), value: animateViewsIn)
-            
+            animatedButton(icon: "info.circle.fill", offset: -viewWidth / 4)
             Spacer()
-            VStack {
-                if animateViewsIn {
-                    VStack {
-                        
-                        Button {
-                            //
-                        } label: {
-                            Text("Play")
-                                .font(.largeTitle)
-                                .foregroundStyle(.white)
-                                .padding(.vertical, 7)
-                                .padding(.horizontal, 50)
-                                .background(.brown)
-                                .clipShape(RoundedRectangle(cornerRadius: 8))
-                                .shadow(radius: 6)
-                        }
-                        .scaleEffect(scalePlayButton ? 1.2 : 1)
-                        .onAppear {
-                            withAnimation(.easeInOut(duration: 1.3).repeatForever()) {
-                                scalePlayButton.toggle()
-                            }
-                        }
-                        .transition(.offset(y: viewHeight / 3))
+            animatedPlayButton()
+            Spacer()
+            animatedButton(icon: "gearshape.fill", offset: viewWidth / 4)
+            Spacer()
+        }
+        .frame(width: viewWidth)
+    }
+    
+    @ViewBuilder
+    private func animatedButton(icon: String, offset: CGFloat) -> some View {
+        VStack {
+            if animateViewsIn {
+                Button {
+                    // Perform action
+                } label: {
+                    Image(systemName: icon)
+                        .font(.largeTitle)
+                        .foregroundStyle(.white)
+                        .shadow(radius: 5)
+                }
+                .transition(.offset(x: offset))
+            }
+        }
+        .animation(.easeOut(duration: Constants.animationDuration).delay(Constants.delayForButtons), value: animateViewsIn)
+    }
+    
+    @ViewBuilder
+    private func animatedPlayButton() -> some View {
+        VStack {
+            if animateViewsIn {
+                Button {
+                    // Perform action
+                } label: {
+                    Text("Play")
+                        .font(.largeTitle)
+                        .foregroundStyle(.white)
+                        .padding(.vertical, 7)
+                        .padding(.horizontal, 50)
+                        .background(.brown)
+                        .clipShape(RoundedRectangle(cornerRadius: 8))
+                        .shadow(radius: 6)
+                }
+                .scaleEffect(scalePlayButton ? 1.2 : 1)
+                .onAppear {
+                    withAnimation(.easeInOut(duration: 1.3).repeatForever()) {
+                        scalePlayButton.toggle()
                     }
                 }
+                .transition(.offset(y: viewHeight / 3))
             }
-            .animation(.easeOut(duration: 0.7).delay(2), value: animateViewsIn)
-            
-            Spacer()
-            
-            VStack {
-                if animateViewsIn {
-                    Button {
-                        //
-                    } label: {
-                        Image(systemName: "gearshape.fill")
-                            .font(.largeTitle)
-                            .foregroundStyle(.white)
-                            .shadow(radius: 6)
-                    }
-                    .transition(.offset(x: viewWidth / 4))
-                }
-            }
-            .animation(.easeOut(duration: 0.7).delay(2.7), value: animateViewsIn)
-            
-            Spacer()
-            
-        }.frame(width: viewWidth)
+        }
+        .animation(.easeOut(duration: Constants.animationDuration).delay(Constants.delayForButtons - 0.7), value: animateViewsIn)
     }
 }
 

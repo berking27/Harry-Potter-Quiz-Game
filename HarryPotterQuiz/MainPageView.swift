@@ -11,6 +11,7 @@ import AVKit
 struct MainPageView: View {
     @State private var audioPlayer: AVAudioPlayer!
     @State private var moveBackgroundImage = false
+    @State private var animateViewsIn = false
     
     var body: some View {
         GeometryReader { geo in
@@ -26,12 +27,13 @@ struct MainPageView: View {
                         }
                     }
                 VStack {
-                    HeaderView()
+                    HeaderView(animateViewsIn: $animateViewsIn)
                     Spacer()
-                    ScoresView()
+                    ScoresView(animateViewsIn: $animateViewsIn)
                     Spacer()
-                    FooterButtonsView()
-                        .frame(width: geo.size.width)
+                    FooterButtonsView(animateViewsIn: $animateViewsIn,
+                                      viewHeight: geo.size.height,
+                                      viewWidth: geo.size.width)
                     Spacer()
                 }
             }
@@ -39,6 +41,7 @@ struct MainPageView: View {
         }
         .ignoresSafeArea()
         .onAppear {
+            animateViewsIn = true
             playAudio()
         }
     }
@@ -48,98 +51,139 @@ struct MainPageView: View {
         
         audioPlayer = try! AVAudioPlayer(contentsOf: URL(filePath: sound!))
         audioPlayer.numberOfLoops = -1
-        audioPlayer.play()
+        //        audioPlayer.play()
     }
     
 }
 
-#Preview {
-    MainPageView()
-}
-
 struct HeaderView: View {
+    @Binding var animateViewsIn: Bool
     var body: some View {
         VStack {
-            Image(systemName: "bolt.fill")
-                .font(.largeTitle)
-                .imageScale(.large)
-            
-            Text("Harry Potter")
-                .font(.custom(Constants.hpFont, size: 70))
-                .fontWeight(.bold)
-                .padding(.bottom, -50)
-            Text("Quiz")
-                .font(.custom(Constants.hpFont, size: 60))
-        }.padding(.top, 80)
+            if animateViewsIn {
+                VStack {
+                    Image(systemName: "bolt.fill")
+                        .font(.largeTitle)
+                        .imageScale(.large)
+                    
+                    Text("Harry Potter")
+                        .font(.custom(Constants.hpFont, size: 70))
+                        .fontWeight(.bold)
+                        .padding(.bottom, -50)
+                    Text("Quiz")
+                        .font(.custom(Constants.hpFont, size: 60))
+                }
+                .padding(.top, 80)
+                .transition(.move(edge: .top))
+            }
+        }
+        .animation(.easeOut(duration: 0.7).delay(2), value: animateViewsIn)
     }
 }
 
 struct ScoresView: View {
+    @Binding var animateViewsIn: Bool
+    
     var body: some View {
         VStack {
-            Text("Recent Scores")
-                .font(.title2)
-            Text("33")
-            Text("22")
-            Text("12")
-            
+            if animateViewsIn {
+                VStack {
+                    Text("Recent Scores")
+                        .font(.title2)
+                    Text("33")
+                    Text("22")
+                    Text("12")
+                    
+                }
+                .font(.title3)
+                .padding(.horizontal)
+                .foregroundStyle(.white)
+                .background(.black.opacity(0.7))
+                .clipShape(RoundedRectangle(cornerRadius: 16))
+                .transition(.opacity)
+            }
         }
-        .font(.title3)
-        .padding(.horizontal)
-        .foregroundStyle(.white)
-        .background(.black.opacity(0.7))
-        .clipShape(RoundedRectangle(cornerRadius: 16))
+        .animation(.linear(duration: 1).delay(3.8), value: animateViewsIn)
     }
 }
 
 struct FooterButtonsView: View {
     @State private var scalePlayButton = false
+    @Binding var animateViewsIn: Bool
+    var viewHeight: CGFloat
+    var viewWidth: CGFloat
     
     var body: some View {
         HStack {
             Spacer()
-            
-            Button {
-                // Show Instructions
-            } label: {
-                Image(systemName: "info.circle.fill")
-                    .font(.largeTitle)
-                    .foregroundStyle(.white)
-                    .shadow(radius: 5)
-            }
-            
-            Spacer()
-            
-            Button {
-                //
-            } label: {
-                Text("Play")
-                    .font(.largeTitle)
-                    .foregroundStyle(.white)
-                    .padding(.vertical, 7)
-                    .padding(.horizontal, 50)
-                    .background(.brown)
-                    .clipShape(RoundedRectangle(cornerRadius: 8))
-                    .shadow(radius: 6)
-            }
-            .scaleEffect(scalePlayButton ? 1.2 : 1)
-            .onAppear {
-                withAnimation(.easeInOut(duration: 1.3).repeatForever()) {
-                    scalePlayButton.toggle()
+            VStack {
+                if animateViewsIn {
+                    
+                    Button {
+                        // Show Instructions
+                    } label: {
+                        Image(systemName: "info.circle.fill")
+                            .font(.largeTitle)
+                            .foregroundStyle(.white)
+                            .shadow(radius: 5)
+                    }
+                    .transition(.offset(x: -viewWidth / 4))
                 }
             }
+            .animation(.easeOut(duration: 0.7).delay(2.7), value: animateViewsIn)
             
             Spacer()
-            
-            Button {
-                //
-            } label: {
-                Image(systemName: "gearshape.fill")
-                    .font(.largeTitle)
-                    .foregroundStyle(.white)
-                    .shadow(radius: 6)
+            VStack {
+                if animateViewsIn {
+                    VStack {
+                        
+                        Button {
+                            //
+                        } label: {
+                            Text("Play")
+                                .font(.largeTitle)
+                                .foregroundStyle(.white)
+                                .padding(.vertical, 7)
+                                .padding(.horizontal, 50)
+                                .background(.brown)
+                                .clipShape(RoundedRectangle(cornerRadius: 8))
+                                .shadow(radius: 6)
+                        }
+                        .scaleEffect(scalePlayButton ? 1.2 : 1)
+                        .onAppear {
+                            withAnimation(.easeInOut(duration: 1.3).repeatForever()) {
+                                scalePlayButton.toggle()
+                            }
+                        }
+                        .transition(.offset(y: viewHeight / 3))
+                    }
+                }
             }
+            .animation(.easeOut(duration: 0.7).delay(2), value: animateViewsIn)
+            
             Spacer()
-        }
+            
+            VStack {
+                if animateViewsIn {
+                    Button {
+                        //
+                    } label: {
+                        Image(systemName: "gearshape.fill")
+                            .font(.largeTitle)
+                            .foregroundStyle(.white)
+                            .shadow(radius: 6)
+                    }
+                    .transition(.offset(x: viewWidth / 4))
+                }
+            }
+            .animation(.easeOut(duration: 0.7).delay(2.7), value: animateViewsIn)
+            
+            Spacer()
+            
+        }.frame(width: viewWidth)
     }
+}
+
+#Preview {
+    MainPageView()
 }

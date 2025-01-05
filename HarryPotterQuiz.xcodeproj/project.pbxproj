@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		AA750B382D08BE8E00FBF48D /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA750B372D08BE8E00FBF48D /* Constants.swift */; };
+		AAA22A9C2D2AF4C400CCD054 /* InstructionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAA22A9B2D2AF4C400CCD054 /* InstructionsView.swift */; };
+		AAA22AA12D2AF69200CCD054 /* InfoBackgroundImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAA22AA02D2AF69200CCD054 /* InfoBackgroundImage.swift */; };
+		AAA22AA42D2AFCC300CCD054 /* Button+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAA22AA32D2AFCC300CCD054 /* Button+Ext.swift */; };
 		AAA33C5D2D077D4E006297B0 /* MainPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAA33C5B2D077D4E006297B0 /* MainPageView.swift */; };
 		AAA33C5E2D077D4E006297B0 /* HarryPotterQuizApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAA33C5C2D077D4E006297B0 /* HarryPotterQuizApp.swift */; };
 		AAA33C602D077D4E006297B0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AAA33C5A2D077D4E006297B0 /* Assets.xcassets */; };
@@ -24,6 +27,9 @@
 
 /* Begin PBXFileReference section */
 		AA750B372D08BE8E00FBF48D /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		AAA22A9B2D2AF4C400CCD054 /* InstructionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstructionsView.swift; sourceTree = "<group>"; };
+		AAA22AA02D2AF69200CCD054 /* InfoBackgroundImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoBackgroundImage.swift; sourceTree = "<group>"; };
+		AAA22AA32D2AFCC300CCD054 /* Button+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Button+Ext.swift"; sourceTree = "<group>"; };
 		AAA2C16B2D077A1E00764166 /* HarryPotterQuiz.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HarryPotterQuiz.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AAA33C5A2D077D4E006297B0 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		AAA33C5B2D077D4E006297B0 /* MainPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainPageView.swift; sourceTree = "<group>"; };
@@ -58,6 +64,32 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		AAA22A9A2D2AF4A700CCD054 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				AAA22A9D2D2AF61800CCD054 /* Components */,
+				AAA33C5B2D077D4E006297B0 /* MainPageView.swift */,
+				AAA22A9B2D2AF4C400CCD054 /* InstructionsView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		AAA22A9D2D2AF61800CCD054 /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				AAA22AA02D2AF69200CCD054 /* InfoBackgroundImage.swift */,
+			);
+			path = Components;
+			sourceTree = "<group>";
+		};
+		AAA22AA22D2AFCB300CCD054 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				AAA22AA32D2AFCC300CCD054 /* Button+Ext.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
 		AAA2C1622D077A1E00764166 = {
 			isa = PBXGroup;
 			children = (
@@ -77,10 +109,11 @@
 		AAA33C722D077DA9006297B0 /* HarryPotterQuiz */ = {
 			isa = PBXGroup;
 			children = (
-				AAA33C792D077DFD006297B0 /* Support */,
-				AAA33C5B2D077D4E006297B0 /* MainPageView.swift */,
-				AAA33C742D077DBC006297B0 /* Preview Content */,
+				AAA22AA22D2AFCB300CCD054 /* Extensions */,
+				AAA22A9A2D2AF4A700CCD054 /* Views */,
 				AA750B372D08BE8E00FBF48D /* Constants.swift */,
+				AAA33C792D077DFD006297B0 /* Support */,
+				AAA33C742D077DBC006297B0 /* Preview Content */,
 			);
 			path = HarryPotterQuiz;
 			sourceTree = "<group>";
@@ -196,8 +229,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				AAA33C5D2D077D4E006297B0 /* MainPageView.swift in Sources */,
+				AAA22AA42D2AFCC300CCD054 /* Button+Ext.swift in Sources */,
+				AAA22A9C2D2AF4C400CCD054 /* InstructionsView.swift in Sources */,
 				AAA33C5E2D077D4E006297B0 /* HarryPotterQuizApp.swift in Sources */,
 				AA750B382D08BE8E00FBF48D /* Constants.swift in Sources */,
+				AAA22AA12D2AF69200CCD054 /* InfoBackgroundImage.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

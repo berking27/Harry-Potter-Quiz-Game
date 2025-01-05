@@ -130,6 +130,8 @@ struct ScoresView: View {
 // MARK: - FooterButtonsView
 struct FooterButtonsView: View {
     @State private var scalePlayButton = false
+    @State private var showInstructions = false
+    @State private var showSettings = false
     @Binding var animateViewsIn: Bool
     var viewHeight: CGFloat
     var viewWidth: CGFloat
@@ -137,33 +139,59 @@ struct FooterButtonsView: View {
     var body: some View {
         HStack {
             Spacer()
-            animatedButton(icon: "info.circle.fill", offset: -viewWidth / 4)
+            animatedInfoButton()
             Spacer()
             animatedPlayButton()
             Spacer()
-            animatedButton(icon: "gearshape.fill", offset: viewWidth / 4)
+            animatedSettingsButton()
             Spacer()
         }
         .frame(width: viewWidth)
     }
     
     @ViewBuilder
-    private func animatedButton(icon: String, offset: CGFloat) -> some View {
+    private func animatedInfoButton() -> some View {
         VStack {
             if animateViewsIn {
                 Button {
-                    // Perform action
+                    showInstructions.toggle()
                 } label: {
-                    Image(systemName: icon)
+                    Image(systemName: "info.circle.fill")
                         .font(.largeTitle)
                         .foregroundStyle(.white)
                         .shadow(radius: 5)
                 }
-                .transition(.offset(x: offset))
+                .transition(.offset(x: -viewWidth / 4))
+                .fullScreenCover(isPresented: $showInstructions) {
+                    InstructionsView()
+                }
             }
         }
         .animation(.easeOut(duration: Constants.animationDuration).delay(Constants.delayForButtons), value: animateViewsIn)
     }
+    
+    @ViewBuilder
+    private func animatedSettingsButton() -> some View {
+        VStack {
+            if animateViewsIn {
+                Button {
+                    showSettings.toggle()
+                } label: {
+                    Image(systemName: "gearshape.fill")
+                        .font(.largeTitle)
+                        .foregroundStyle(.white)
+                        .shadow(radius: 5)
+                }
+                .transition(.offset(x: viewWidth / 4))
+                .sheet(isPresented: $showSettings) {
+                    //SettingView
+                    InfoBackgroundImage()
+                }
+            }
+        }
+        .animation(.easeOut(duration: Constants.animationDuration).delay(Constants.delayForButtons), value: animateViewsIn)
+    }
+    
     
     @ViewBuilder
     private func animatedPlayButton() -> some View {

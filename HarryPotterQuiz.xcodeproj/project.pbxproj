@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		AA3014852D33F09800A190A4 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA3014842D33F09800A190A4 /* SettingsView.swift */; };
+		AA3014872D33FCAE00A190A4 /* GameplayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA3014862D33FCAE00A190A4 /* GameplayView.swift */; };
 		AA750B382D08BE8E00FBF48D /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA750B372D08BE8E00FBF48D /* Constants.swift */; };
 		AAA22A9C2D2AF4C400CCD054 /* InstructionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAA22A9B2D2AF4C400CCD054 /* InstructionsView.swift */; };
 		AAA22AA12D2AF69200CCD054 /* InfoBackgroundImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAA22AA02D2AF69200CCD054 /* InfoBackgroundImage.swift */; };
@@ -28,6 +29,7 @@
 
 /* Begin PBXFileReference section */
 		AA3014842D33F09800A190A4 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		AA3014862D33FCAE00A190A4 /* GameplayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameplayView.swift; sourceTree = "<group>"; };
 		AA750B372D08BE8E00FBF48D /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		AAA22A9B2D2AF4C400CCD054 /* InstructionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstructionsView.swift; sourceTree = "<group>"; };
 		AAA22AA02D2AF69200CCD054 /* InfoBackgroundImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoBackgroundImage.swift; sourceTree = "<group>"; };
@@ -73,6 +75,7 @@
 				AAA33C5B2D077D4E006297B0 /* MainPageView.swift */,
 				AAA22A9B2D2AF4C400CCD054 /* InstructionsView.swift */,
 				AA3014842D33F09800A190A4 /* SettingsView.swift */,
+				AA3014862D33FCAE00A190A4 /* GameplayView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -231,6 +234,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AA3014872D33FCAE00A190A4 /* GameplayView.swift in Sources */,
 				AA3014852D33F09800A190A4 /* SettingsView.swift in Sources */,
 				AAA33C5D2D077D4E006297B0 /* MainPageView.swift in Sources */,
 				AAA22AA42D2AFCC300CCD054 /* Button+Ext.swift in Sources */,

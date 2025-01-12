@@ -14,6 +14,7 @@ struct MainPageView: View {
     @State private var moveBackgroundImage = false
     @State private var animateViewsIn = false
     
+    
     var body: some View {
         GeometryReader { geo in
             ZStack {
@@ -183,9 +184,8 @@ struct FooterButtonsView: View {
                         .shadow(radius: 5)
                 }
                 .transition(.offset(x: viewWidth / 4))
-                .sheet(isPresented: $showSettings) {
-                    //SettingView
-                    InfoBackgroundImage()
+                .fullScreenCover(isPresented: $showSettings) {
+                    SettingsView()
                 }
             }
         }

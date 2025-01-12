@@ -14,6 +14,7 @@ struct MainPageView: View {
     @State private var moveBackgroundImage = false
     @State private var animateViewsIn = false
     
+    
     var body: some View {
         GeometryReader { geo in
             ZStack {
@@ -132,6 +133,7 @@ struct FooterButtonsView: View {
     @State private var scalePlayButton = false
     @State private var showInstructions = false
     @State private var showSettings = false
+    @State private var playGame = false
     @Binding var animateViewsIn: Bool
     var viewHeight: CGFloat
     var viewWidth: CGFloat
@@ -183,9 +185,8 @@ struct FooterButtonsView: View {
                         .shadow(radius: 5)
                 }
                 .transition(.offset(x: viewWidth / 4))
-                .sheet(isPresented: $showSettings) {
-                    //SettingView
-                    InfoBackgroundImage()
+                .fullScreenCover(isPresented: $showSettings) {
+                    SettingsView()
                 }
             }
         }
@@ -198,7 +199,7 @@ struct FooterButtonsView: View {
         VStack {
             if animateViewsIn {
                 Button {
-                    // Perform action
+                    playGame.toggle()
                 } label: {
                     Text("Play")
                         .font(.largeTitle)
@@ -216,6 +217,9 @@ struct FooterButtonsView: View {
                     }
                 }
                 .transition(.offset(y: viewHeight / 3))
+                .fullScreenCover(isPresented: $playGame) {
+                    GameplayView()
+                }
             }
         }
         .animation(.easeOut(duration: Constants.animationDuration).delay(Constants.delayForButtons - 0.7), value: animateViewsIn)

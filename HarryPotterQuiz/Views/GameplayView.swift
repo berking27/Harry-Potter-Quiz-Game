@@ -6,12 +6,15 @@
 //
 
 import SwiftUI
+import AVKit
 
 struct GameplayView: View {
     @Environment(\.dismiss) private var dismiss
     
     @Namespace private var namespace
     
+    @State private var musicPlayer: AVAudioPlayer!
+    @State private var sfxPlayer: AVAudioPlayer!
     @State private var animateViewsIn = false
     @State private var tappedCorrectAnswer = false
     @State private var hintWiggle = false
@@ -88,6 +91,7 @@ struct GameplayView: View {
                                         withAnimation(.easeInOut(duration: 1)) {
                                             revealHint = true
                                         }
+                                        playFlipSound()
                                     }
                                     .rotation3DEffect(.degrees(revealHint ? 720 : 0), axis: (x: 0, y: 1, z: 0))
                                     .scaleEffect(revealHint ? 5 : 1)
@@ -136,6 +140,7 @@ struct GameplayView: View {
                                         withAnimation(.easeInOut(duration: 1)) {
                                             revealBook = true
                                         }
+                                        playFlipSound()
                                     }
                                     .rotation3DEffect(.degrees(revealBook ? 720 : 0), axis: (x: 0, y: 1, z: 0))
                                     .scaleEffect(revealBook ? 5 : 1)
@@ -186,6 +191,7 @@ struct GameplayView: View {
                                                     withAnimation(.easeOut(duration: 1)) {
                                                         tappedCorrectAnswer = true
                                                     }
+                                                    playCorrectSound()
                                                 }
                                         }
                                     }
@@ -207,6 +213,7 @@ struct GameplayView: View {
                                                 withAnimation(.easeOut(duration: 1)) {
                                                     wrongAnswersTapped.append(i)
                                                 }
+                                                playWrongSoundAndFeedBack()
                                             }
                                             .scaleEffect(wrongAnswersTapped.contains(i) ? 0.8 : 1)
                                             .disabled(tappedCorrectAnswer || wrongAnswersTapped.contains(i))
@@ -313,8 +320,82 @@ struct GameplayView: View {
         .ignoresSafeArea()
         .onAppear() {
             animateViewsIn = true
+//            playMusic()
             
         }
+    }
+    
+    //MARK: - Audios functions
+
+    private func playMusic() {
+        let songs = ["let-the-mystery-unfold", "spellcraft", "hiding-place-in-the-forest", "deep-in-the-dell"]
+        
+        let i = Int.random(in: 0..<songs.count)
+        
+        
+        guard let soundPath = Bundle.main.path(forResource: songs[i], ofType: "mp3") else {
+            print("Audio file not found.")
+            return
+        }
+        
+        do {
+            musicPlayer = try AVAudioPlayer(contentsOf: URL(filePath: soundPath))
+            musicPlayer.volume = 0.1
+            musicPlayer?.numberOfLoops = -1
+            musicPlayer?.play()
+        } catch {
+            print("Audio playback failed: \(error.localizedDescription)")
+        }
+    }
+    
+    private func playFlipSound() {
+        guard let soundPath = Bundle.main.path(forResource: "page-flip", ofType: "mp3") else {
+            print("Audio file not found.")
+            return
+        }
+        
+        do {
+            sfxPlayer = try AVAudioPlayer(contentsOf: URL(filePath: soundPath))
+            sfxPlayer?.play()
+        } catch {
+            print("Audio playback failed: \(error.localizedDescription)")
+        }
+    }
+    
+    
+    private func playWrongSoundAndFeedBack() {
+        guard let soundPath = Bundle.main.path(forResource: "negative-beeps", ofType: "mp3") else {
+            print("Audio file not found.")
+            return
+        }
+        
+        do {
+            sfxPlayer = try AVAudioPlayer(contentsOf: URL(filePath: soundPath))
+            sfxPlayer?.play()
+        } catch {
+            print("Audio playback failed: \(error.localizedDescription)")
+        }
+        
+        giveWrongFeedback()
+    }
+    
+    private func playCorrectSound() {
+        guard let soundPath = Bundle.main.path(forResource: "magic-wand", ofType: "mp3") else {
+            print("Audio file not found.")
+            return
+        }
+        
+        do {
+            sfxPlayer = try AVAudioPlayer(contentsOf: URL(filePath: soundPath))
+            sfxPlayer?.play()
+        } catch {
+            print("Audio playback failed: \(error.localizedDescription)")
+        }
+    }
+    
+    private func giveWrongFeedback() {
+        let generator = UINotificationFeedbackGenerator()
+        generator.notificationOccurred(.error)
     }
 }
 

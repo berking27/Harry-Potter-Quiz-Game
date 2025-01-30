@@ -58,7 +58,7 @@ struct GameplayView: View {
                                 .opacity(tappedCorrectAnswer ? 0.1 : 1)
                         }
                     }
-                    .animation(.easeInOut(duration: 2), value: animateViewsIn)
+                    .animation(.easeInOut(duration: animateViewsIn ? 2 : 0), value: animateViewsIn)
                     
                     Spacer()
                     
@@ -105,7 +105,7 @@ struct GameplayView: View {
                                     .disabled(tappedCorrectAnswer)
                             }
                         }
-                        .animation(.easeInOut(duration: 1.5).delay(2), value: animateViewsIn)
+                        .animation(.easeInOut(duration: animateViewsIn ? 1.5 : 0).delay(animateViewsIn ? 2 : 0), value: animateViewsIn)
                         
                         Spacer()
                         
@@ -156,7 +156,7 @@ struct GameplayView: View {
                                 
                             }
                         }
-                        .animation(.easeInOut(duration: 1.5).delay(2), value: animateViewsIn)
+                        .animation(.easeInOut(duration: animateViewsIn ? 1.5 : 0).delay(animateViewsIn ? 2 : 0), value: animateViewsIn)
                     }
                     .padding(.bottom)
                     
@@ -190,7 +190,7 @@ struct GameplayView: View {
                                         }
                                     }
                                 }
-                                .animation(.easeOut(duration: 1).delay(1.5), value: animateViewsIn)
+                                .animation(.easeOut(duration: animateViewsIn ? 1 : 0).delay(animateViewsIn ? 1.5 : 0), value: animateViewsIn)
                                 
                             } else {
                                 VStack {
@@ -213,7 +213,7 @@ struct GameplayView: View {
                                             .opacity(tappedCorrectAnswer ? 0.1 : 1)
                                     }
                                 }
-                                .animation(.easeOut(duration: 1).delay(1.5), value: animateViewsIn)
+                                .animation(.easeOut(duration: animateViewsIn ? 1 : 0).delay(animateViewsIn ? 1.5 : 0), value: animateViewsIn)
                             }
                         }
                     }
@@ -251,7 +251,7 @@ struct GameplayView: View {
                                 .transition(.scale.combined(with: .offset(y: -geo.size.height / 2)))
                         }
                     }
-                    .animation(.easeInOut(duration: 1.5).delay(1), value: tappedCorrectAnswer)
+                    .animation(.easeInOut(duration: tappedCorrectAnswer ? 1.5 : 0).delay(tappedCorrectAnswer ? 1 : 0), value: tappedCorrectAnswer)
                     
                     Spacer()
                     
@@ -269,7 +269,7 @@ struct GameplayView: View {
                                 .matchedGeometryEffect(id: "answer", in: namespace)
                         }
                     }
-                    .animation(.easeInOut(duration: 2.0).delay(2), value: tappedCorrectAnswer)
+                    .animation(.easeInOut(duration: tappedCorrectAnswer ? 2.0 : 0).delay(tappedCorrectAnswer ? 2 : 0), value: tappedCorrectAnswer)
                     
                     
                     Spacer()
@@ -301,7 +301,7 @@ struct GameplayView: View {
                             }
                         }
                     }
-                    .animation(.easeInOut(duration: 2.0).delay(2.0), value: tappedCorrectAnswer)
+                    .animation(.easeInOut(duration: tappedCorrectAnswer ? 2.7 : 0).delay(tappedCorrectAnswer ? 2.7 : 0), value: tappedCorrectAnswer)
                     
                     Spacer()
                     Spacer()
@@ -313,7 +313,7 @@ struct GameplayView: View {
         .ignoresSafeArea()
         .onAppear() {
             animateViewsIn = true
-            //            tappedCorrectAnswer = true
+            
         }
     }
 }

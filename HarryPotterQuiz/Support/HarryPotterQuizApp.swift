@@ -15,6 +15,9 @@ struct HarryPotterQuizApp: App {
         WindowGroup {
             MainPageView()
                 .environmentObject(store)
+                .task {
+                    await store.loadProducts()
+                }
         }
     }
 }

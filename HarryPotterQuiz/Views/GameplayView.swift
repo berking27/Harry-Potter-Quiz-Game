@@ -31,7 +31,7 @@ struct GameplayView: View {
             ZStack {
                 Image(.hogwarts)
                     .resizable()
-                    .frame(width: geo.size.width * 3, height: geo.size.height * 1.05)
+                    .frame(width: geo.size.width * 3,height: geo.size.height * 1.05)
                     .overlay(Rectangle().foregroundStyle(.black.opacity(0.8)))
                 
                 VStack {

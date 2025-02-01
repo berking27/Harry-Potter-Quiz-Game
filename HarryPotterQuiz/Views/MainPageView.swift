@@ -10,6 +10,8 @@ import AVKit
 
 // MARK: - MainPageView
 struct MainPageView: View {
+    @EnvironmentObject private var store: Store
+    
     @State private var audioPlayer: AVAudioPlayer?
     @State private var moveBackgroundImage = false
     @State private var animateViewsIn = false
@@ -25,9 +27,11 @@ struct MainPageView: View {
                     Spacer()
                     ScoresView(animateViewsIn: $animateViewsIn)
                     Spacer()
-                    FooterButtonsView(animateViewsIn: $animateViewsIn,
-                                      viewHeight: geo.size.height,
-                                      viewWidth: geo.size.width)
+                    FooterButtonsView(
+                        animateViewsIn: $animateViewsIn,
+                        viewHeight: geo.size.height,
+                        viewWidth: geo.size.width)
+                    .environmentObject(store)
                     Spacer()
                 }
             }
@@ -130,6 +134,7 @@ struct ScoresView: View {
 
 // MARK: - FooterButtonsView
 struct FooterButtonsView: View {
+    @EnvironmentObject private var store: Store
     @State private var scalePlayButton = false
     @State private var showInstructions = false
     @State private var showSettings = false
@@ -185,8 +190,9 @@ struct FooterButtonsView: View {
                         .shadow(radius: 5)
                 }
                 .transition(.offset(x: viewWidth / 4))
-                .fullScreenCover(isPresented: $showSettings) {
+                .sheet(isPresented: $showSettings) {
                     SettingsView()
+                        .environmentObject(store)
                 }
             }
         }
@@ -228,4 +234,5 @@ struct FooterButtonsView: View {
 
 #Preview {
     MainPageView()
+        .environmentObject(Store())
 }

@@ -7,15 +7,10 @@
 
 import SwiftUI
 
-enum BookStatus {
-    case active
-    case inactive
-    case locked
-}
 
 struct SettingsView: View {
+    @EnvironmentObject private var store: Store
     @Environment(\.dismiss) private var dismiss
-    @State private var books: [BookStatus] = [.active, .active, .inactive, .locked, .locked, .locked, .locked]
     
     var body: some View {
         ZStack {
@@ -29,7 +24,7 @@ struct SettingsView: View {
                 ScrollView {
                     LazyVGrid(columns: [GridItem(), GridItem()]) {
                         ForEach(0..<7) { i in
-                            if books[i] == .active {
+                            if store.books[i] == .active {
                                 ZStack(alignment: .bottomTrailing) {
                                     Image("hp\(i + 1)")
                                         .resizable()
@@ -43,9 +38,9 @@ struct SettingsView: View {
                                         .padding(2)
                                 }
                                 .onTapGesture {
-                                    books[i] = .inactive
+                                    store.books[i] = .inactive
                                 }
-                            } else if books[i] == .inactive {
+                            } else if store.books[i] == .inactive {
                                 ZStack(alignment: .bottomTrailing) {
                                     Image("hp\(i + 1)")
                                         .resizable()
@@ -60,7 +55,7 @@ struct SettingsView: View {
                                 }
                                 .overlay(Rectangle().opacity(0.33))
                                 .onTapGesture {
-                                    books[i] = .active
+                                    store.books[i] = .active
                                 }
                             } else {
                                 ZStack() {
@@ -89,10 +84,6 @@ struct SettingsView: View {
     }
 }
 
-#Preview {
-    SettingsView()
-}
-
 struct BookGridView: View {
     let imageName: String
     let isSelected: Bool
@@ -114,3 +105,9 @@ struct BookGridView: View {
         .overlay(Rectangle().opacity(isSelected ? 0 : 0.33))
     }
 }
+
+#Preview {
+    SettingsView()
+        .environmentObject(Store())
+}
+
